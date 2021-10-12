@@ -20,15 +20,15 @@ public class ProductResourceTest {
         RestAssured.given().when().get("/products").then().statusCode(200);
     }
 
-    @BeforeEach
-    public void setUp() {
-        // Create a few albums to run tests with.
-        JsonObject jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "Album of Apples.").build();
-        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
+    // @BeforeEach
+    // public void setUp() {
+    //     // Create a few albums to run tests with.
+    //     JsonObject jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "Album of Apples.").build();
+    //     RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
 
-        jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "A forest of trees.").build();
-        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
-    }
+    //     jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "A forest of trees.").build();
+    //     RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
+    // }
 
     @Test
     public void testProductCreate() {
@@ -37,6 +37,10 @@ public class ProductResourceTest {
         // Test the creation of a Product without an AlbumId provided. This should fail and return a statuscode 400.
         JsonObject jobj = Json.createObjectBuilder().add("name", "Apple").add("description", "Red and Shiny.").build();
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/products").then().statusCode(400);
+
+        // Create an album to test with
+        jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "A collection of images.").build();
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
 
         // Create and assign an album
         jobj = Json.createObjectBuilder().add("name", "Apple").add("description", "Red and Shiny.").add("album", 0).build();
@@ -49,22 +53,26 @@ public class ProductResourceTest {
         JsonObject jobj = Json.createObjectBuilder().add("name", "Apple").add("description", "Red and Shiny.").add("album", 0).build();
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/products").then().statusCode(200);
 
-        jobj = Json.createObjectBuilder().add("name", "Trees").add("description", "A forest of trees.").add("album", 1).build();
+        // Create an album to test with
+        jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "A collection of images.").build();
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
+
+        jobj = Json.createObjectBuilder().add("name", "Trees").add("description", "A forest of trees.").add("album", 0).build();
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/products").then().statusCode(200);
 
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().get("/albums/0").then().statusCode(200);
-        RestAssured.given().contentType("application/json").body(jobj.toString()).when().get("/albums/1").then().statusCode(200);
     } 
 
     @Test
     public void testList() {
         // Test GET when multiple items have been added.
-        JsonObject jobj = Json.createObjectBuilder().add("name", "Apple").add("description", "Red and Shiny.").add("album", 0).build();
+        // Create an album to test with
+        JsonObject jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "A collection of images.").build();
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
+
+        jobj = Json.createObjectBuilder().add("name", "Apple").add("description", "Red and Shiny.").add("album", 0).build();
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/products").then().statusCode(200);
 
-        jobj = Json.createObjectBuilder().add("name", "Trees").add("description", "A forest of trees.").add("album", 1).build();
-        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/products").then().statusCode(200);
-
-        RestAssured.when().get("/products").then().statusCode(200).body(containsString("Red"), containsString("forest"));
+        RestAssured.when().get("/products").then().statusCode(200).body(containsString("Red"));
     }
 }
