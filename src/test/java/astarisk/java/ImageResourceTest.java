@@ -27,7 +27,8 @@ public class ImageResourceTest {
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/images").then().statusCode(200);
 
         // A simple Image with albums that doesn't exist
-        jobj = Json.createObjectBuilder().add("albums", Json.createArrayBuilder().add(3).build()).add("title", "Apple.png.").add("description", "A worm ridden apple.").build();
+        // Future note, I need to look into the BeforeEach and AfterEach in Product to see if Quarkus has it effec there too, as if this isn't set right it errors out.
+        jobj = Json.createObjectBuilder().add("albums", Json.createArrayBuilder().add(99).build()).add("title", "Apple.png.").add("description", "A worm ridden apple.").build();
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/images").then().statusCode(400);
 
         // Create an album.
