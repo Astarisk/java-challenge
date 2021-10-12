@@ -13,11 +13,6 @@ public class Album {
     public Album() {
     }
 
-    public Album(String description) {
-        this.images = new ArrayList<>();
-        this.description = description;
-    }
-
     public Album(ArrayList<Integer> images, String description) {
         this.images = images;
         this.description = description;
