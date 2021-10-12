@@ -24,8 +24,13 @@ public class ImageService extends Service<Image> {
 
     @Override
     public Image updateEntry(Image entry) {
-        // TODO Auto-generated method stub
-        return null;
+        Image oldEntry = findById(entry.getId());
+
+        if(oldEntry != null)
+            oldEntry.setTitle(entry.getTitle());
+            oldEntry.setDescription(entry.getDescription());
+            oldEntry.setAlbums(entry.getAlbums());
+        return oldEntry;
     }
 
     @Override

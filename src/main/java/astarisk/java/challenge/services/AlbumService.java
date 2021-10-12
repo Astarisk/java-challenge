@@ -40,7 +40,11 @@ public class AlbumService extends Service<Album> {
 
     @Override
     public Album deleteEntry(int id) {
-        // TODO Auto-generated method stub
+        Album deleteThis = findById(id);
+        if (entryList.contains(deleteThis)) {
+            entryList.remove(deleteThis);
+            return deleteThis;
+        }       
         return null;
     }
 }
