@@ -51,6 +51,9 @@ public class Image {
     }
 
     public void addAlbum(Integer albumId) {
+        // This here makes an argument to turn it from an ArrayList to a Set for better performance.
+        if(albums.contains(albumId))
+            return;
         albums.add(albumId);
     }
 

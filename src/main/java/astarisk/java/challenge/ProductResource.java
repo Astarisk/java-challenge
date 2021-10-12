@@ -36,7 +36,7 @@ public class ProductResource {
         if (album == null)
             throw new WebApplicationException(400);
 
-        productService.createEntry(product);
+        product = productService.createEntry(product);
         return product;
     }
 
