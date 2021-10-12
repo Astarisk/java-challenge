@@ -29,6 +29,14 @@ public class ImageResourceTest {
         // A simple Image with albums that doesn't exist
         jobj = Json.createObjectBuilder().add("albums", Json.createArrayBuilder().add(3).build()).add("title", "Apple.png.").add("description", "A worm ridden apple.").build();
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/images").then().statusCode(400);
+
+        // Create an album.
+        jobj = Json.createObjectBuilder().add("images", Json.createArrayBuilder().build()).add("description", "A collection of apples.").build();
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
+
+        // Add an image to an album
+        jobj = Json.createObjectBuilder().add("albums", Json.createArrayBuilder().add(0).build()).add("title", "Apple.png.").add("description", "A worm ridden apple.").build();
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/images").then().statusCode(200).body(containsString("Apple.png"));
     }
 
     @Test

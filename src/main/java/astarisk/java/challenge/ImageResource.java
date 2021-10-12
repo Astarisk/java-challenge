@@ -27,7 +27,6 @@ public class ImageResource {
     public Image create(Image image) {
         // Keep the implentation as simple as possible.
         // Reject creation if the any of the albumId's passed is invaled.
-        
         if(image.getAlbums() != null) {
             for (Integer albumId : image.getAlbums()) {
                 if(albumService.findById(albumId) == null)
@@ -39,7 +38,7 @@ public class ImageResource {
         // Add the imageId to all listed albums.
         for (Integer albumId : image.getAlbums()) {
             Album album = albumService.findById(albumId);
-            image.addAlbum(album.getId());
+            album.addImage(image.getId());
         }
         return image;
     }
