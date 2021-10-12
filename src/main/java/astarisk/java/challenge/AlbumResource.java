@@ -50,7 +50,7 @@ public class AlbumResource {
         Album oldAlbum = albumService.findById(id);
         if (oldAlbum == null)
             throw new WebApplicationException(404);
-            
+
         // Same rules as create. Return status 400 if any image can't be found.
         if(album.getImages() != null) {
             for (Integer imageId : album.getImages()) {
@@ -72,7 +72,7 @@ public class AlbumResource {
         }
 
         album.setId(oldAlbum.getId());
-        albumService.updateEntry(album);
+        album = albumService.updateEntry(album);
         
         return album;
     }

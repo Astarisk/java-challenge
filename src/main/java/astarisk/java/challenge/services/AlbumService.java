@@ -30,8 +30,12 @@ public class AlbumService extends Service<Album> {
 
     @Override
     public Album updateEntry(Album entry) {
-        // TODO Auto-generated method stub
-        return null;
+        Album oldEntry = findById(entry.getId());
+
+        if(oldEntry != null)
+            oldEntry.setDescription(entry.getDescription());
+            oldEntry.setImages(entry.getImages());
+        return oldEntry;
     }
 
     @Override
