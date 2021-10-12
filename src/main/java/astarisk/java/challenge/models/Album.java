@@ -35,6 +35,8 @@ public class Album {
     }
 
     public void addImage(Integer imageId) {
+        if(images.contains(imageId))
+            return;
         images.add(imageId);
     }
 

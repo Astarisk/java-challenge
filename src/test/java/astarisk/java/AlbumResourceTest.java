@@ -43,7 +43,9 @@ public class AlbumResourceTest {
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().post("/albums").then().statusCode(200);
 
         RestAssured.given().contentType("application/json").body(jobj.toString()).when().get("/albums/1").then().statusCode(200);
-        RestAssured.given().contentType("application/json").body(jobj.toString()).when().delete("/albums/1").then().statusCode(404);
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().delete("/albums/1").then().statusCode(200);
+        RestAssured.given().contentType("application/json").body(jobj.toString()).when().get("/albums/1").then().statusCode(404);
+
     }
 
     @Test
